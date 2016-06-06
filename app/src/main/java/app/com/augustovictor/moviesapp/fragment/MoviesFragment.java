@@ -14,6 +14,7 @@ import java.util.List;
 
 import app.com.augustovictor.moviesapp.R;
 import app.com.augustovictor.moviesapp.adapter.MoviesListAdapter;
+import app.com.augustovictor.moviesapp.util.FetchMoviesTask;
 
 /**
  * Created by victoraweb on 6/6/16.
@@ -29,6 +30,8 @@ public class MoviesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.movies_list, container, false);
+        FetchMoviesTask moviesTask = new FetchMoviesTask();
+        moviesTask.execute("popularity.desc");
         setUpRecyclerView(v);
         return v;
     }
