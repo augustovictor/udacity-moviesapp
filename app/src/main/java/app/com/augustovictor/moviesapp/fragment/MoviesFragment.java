@@ -22,7 +22,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import app.com.augustovictor.moviesapp.BuildConfig;
@@ -61,7 +64,7 @@ public class MoviesFragment extends Fragment {
 
         updateMovies();
 
-        setUpRecyclerView(v,  mMovies);
+        setUpRecyclerView(v, mMovies);
 
         return v;
     }
@@ -87,7 +90,7 @@ public class MoviesFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Movie> movies) {
             if (movies != null) {
-                for(Movie movie : movies) {
+                for (Movie movie : movies) {
                     adapter.addItem(movie, mMovies.size());
                 }
             }
@@ -130,11 +133,11 @@ public class MoviesFragment extends Fragment {
                 reader = new BufferedReader(new InputStreamReader(inputStream));
 
                 String line;
-                while((line = reader.readLine()) != null) {
+                while ((line = reader.readLine()) != null) {
                     buffer.append(line + "\n");
                 }
 
-                if(buffer.length() == 0) {
+                if (buffer.length() == 0) {
                     // Stream was empty. No point in parsing.
                     moviesJsonStr = null;
                 }
@@ -164,17 +167,30 @@ public class MoviesFragment extends Fragment {
             } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
 
 //        This will happen if there is an error getting/parsing the movies
             return null;
         }
 
-        private List<Movie> getMoviesDataFromJson(String moviesJsonStr) throws JSONException{
+        private List<Movie> getMoviesDataFromJson(String moviesJsonStr) throws JSONException, ParseException {
 
             // Declare the names of the JSON objects that need to be extracted
-            final String OBJ_LIST = "results";
-            final String OBJ_TITLE = "title";
+            final String
+                    OBJ_LIST = "results",
+                    OBJ_TITLE = "title",
+                    OBJ_OVERVIEW = "overview",
+                    OBJ_POSTER_PATH = "poster_path",
+                    OBJ_BACKDROP_PATH = "backdrop_path",
+                    OBJ_LANGUAGE = "original_language",
+                    OBJ_VOTES = "vote_count",
+                    OBJ_VOTES_AVG = "vote_average",
+                    OBJ_RELEASE_DATE = "release_date",
+                    OBJ_ADULT = "adult",
+                    OBJ_HAS_VIDEO = "video";
+
 
             JSONObject moviesJson = new JSONObject(moviesJsonStr);
             JSONArray moviesArray = moviesJson.getJSONArray(OBJ_LIST);
@@ -185,10 +201,28 @@ public class MoviesFragment extends Fragment {
 
                 // Get the json object representing the data you want
                 JSONObject movieObject = moviesArray.getJSONObject(i);
+
                 movie.setmTitle(movieObject.getString(OBJ_TITLE));
+                movie.setmOverview(movieObject.getString(OBJ_OVERVIEW));
+                movie.setmPoster(movieObject.getString(OBJ_POSTER_PATH));
+                movie.setmBackdropPath(movieObject.getString(OBJ_BACKDROP_PATH));
+                movie.setmLanguage(movieObject.getString(OBJ_LANGUAGE));
+
+                movie.setmVotes(movieObject.getInt(OBJ_VOTES));
+
+                movie.setmVotesAvg(movieObject.getDouble(OBJ_VOTES_AVG));
+
+                String releaseDate = movieObject.getString(OBJ_RELEASE_DATE);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
+                Date formatedDate = dateFormat.parse(releaseDate);
+
+                movie.setmReleaseDate(formatedDate);
+
+                movie.setmAdult(movieObject.getBoolean(OBJ_ADULT));
+                movie.setmHasVideo(movieObject.getBoolean(OBJ_HAS_VIDEO));
 
                 moviesList.add(movie);
-                Log.d(LOG_TAG, "Movie added: " + movie.getmTitle());
+                Log.d(LOG_TAG, "Movie added: " + movie.toString());
             }
 
             return moviesList;

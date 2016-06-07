@@ -53,11 +53,18 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mMovieTitle;
+        private TextView mMovieVoteAverage;
+        private TextView mMovieLanguage;
+        private TextView mMovieReleaseDate;
         private Context context;
 
         public ViewHolder(Context context, View itemView) {
             super(itemView);
+
             mMovieTitle = (TextView) itemView.findViewById(R.id.list_item_title_textview);
+            mMovieVoteAverage = (TextView) itemView.findViewById(R.id.list_item_vote_average_textview);
+            mMovieLanguage = (TextView) itemView.findViewById(R.id.list_item_language_textview);
+            mMovieReleaseDate = (TextView) itemView.findViewById(R.id.list_item_release_date_textview);
 
             this.context = context;
 
@@ -67,6 +74,9 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
 
         public void bindMovie(Movie currentMovie, int position) {
             this.mMovieTitle.setText(currentMovie.getmTitle());
+            this.mMovieVoteAverage.setText(String.valueOf(currentMovie.getmVotesAvg()));
+            this.mMovieLanguage.setText(currentMovie.getmLanguage());
+            this.mMovieReleaseDate.setText(currentMovie.getmReleaseDate().toString());
         }
 
         @Override

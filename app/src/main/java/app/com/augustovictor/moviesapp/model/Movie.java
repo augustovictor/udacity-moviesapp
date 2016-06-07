@@ -16,7 +16,7 @@ public class Movie {
 
     private int mVotes;
 
-    private float mVotesAvg;
+    private double mVotesAvg;
 
     private Date mReleaseDate;
 
@@ -72,11 +72,11 @@ public class Movie {
         this.mVotes = mVotes;
     }
 
-    public float getmVotesAvg() {
+    public double getmVotesAvg() {
         return mVotesAvg;
     }
 
-    public void setmVotesAvg(float mVotesAvg) {
+    public void setmVotesAvg(double mVotesAvg) {
         this.mVotesAvg = mVotesAvg;
     }
 
