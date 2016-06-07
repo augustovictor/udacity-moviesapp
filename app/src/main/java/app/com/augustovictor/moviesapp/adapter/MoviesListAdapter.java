@@ -76,4 +76,9 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
             Log.d(LOG_TAG, "Movie clicked: " + movie);
         }
     }
+
+    public void addItem(String movie, int position) {
+        mMovies.add(movie);
+        notifyItemInserted(position);
+    }
 }
