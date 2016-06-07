@@ -12,6 +12,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import app.com.augustovictor.moviesapp.R;
+import app.com.augustovictor.moviesapp.model.Movie;
 
 /**
  * Created by victoraweb on 6/6/16.
@@ -19,9 +20,9 @@ import app.com.augustovictor.moviesapp.R;
 public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.ViewHolder> {
 
     private static final String LOG_TAG = MoviesListAdapter.class.getSimpleName();
-    private List<String> mMovies;
+    private List<Movie> mMovies;
 
-    public MoviesListAdapter(List<String> mMovies) {
+    public MoviesListAdapter(List<Movie> mMovies) {
         this.mMovies = mMovies;
     }
 
@@ -38,7 +39,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String currentMovie = mMovies.get(position);
+        Movie currentMovie = mMovies.get(position);
         holder.bindMovie(currentMovie, position);
         Log.d(LOG_TAG, "Movie binded: " + position);
     }
@@ -64,20 +65,20 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
             itemView.setOnClickListener(this);
         }
 
-        public void bindMovie(String currentMovie, int position) {
-            this.mMovieTitle.setText(currentMovie);
+        public void bindMovie(Movie currentMovie, int position) {
+            this.mMovieTitle.setText(currentMovie.getmTitle());
         }
 
         @Override
         public void onClick(View view) {
             int position = getLayoutPosition();
-            String movie = mMovies.get(position);
-            Toast.makeText(context, movie, Toast.LENGTH_SHORT).show();
+            Movie movie = mMovies.get(position);
+            Toast.makeText(context, movie.getmTitle(), Toast.LENGTH_SHORT).show();
             Log.d(LOG_TAG, "Movie clicked: " + movie);
         }
     }
 
-    public void addItem(String movie, int position) {
+    public void addItem(Movie movie, int position) {
         mMovies.add(movie);
         notifyItemInserted(position);
     }

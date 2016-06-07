@@ -28,6 +28,7 @@ import java.util.List;
 import app.com.augustovictor.moviesapp.BuildConfig;
 import app.com.augustovictor.moviesapp.R;
 import app.com.augustovictor.moviesapp.adapter.MoviesListAdapter;
+import app.com.augustovictor.moviesapp.model.Movie;
 
 /**
  * Created by victoraweb on 6/6/16.
@@ -36,7 +37,7 @@ public class MoviesFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private MoviesListAdapter adapter;
-    private List<String> mMovies;
+    private List<Movie> mMovies;
 
     public MoviesFragment() {
         this.mMovies = new ArrayList<>();
@@ -65,10 +66,10 @@ public class MoviesFragment extends Fragment {
         return v;
     }
 
-    public void setUpRecyclerView(View v, List<String> moviesString) {
+    public void setUpRecyclerView(View v, List<Movie> movies) {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.movies_list_recycler_view);
 
-        adapter = new MoviesListAdapter(moviesString);
+        adapter = new MoviesListAdapter(movies);
         mRecyclerView.setAdapter(adapter);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
@@ -77,23 +78,23 @@ public class MoviesFragment extends Fragment {
 
     // ASYNCTASK
 
-    public class FetchMoviesTask extends AsyncTask<String, Void, List<String>> {
+    public class FetchMoviesTask extends AsyncTask<String, Void, List<Movie>> {
 
         private List<String> mMoviesString;
 
         private final String LOG_TAG = FetchMoviesTask.class.getSimpleName();
 
         @Override
-        protected void onPostExecute(List<String> strings) {
-            if (strings != null) {
-                for(String movie : strings) {
+        protected void onPostExecute(List<Movie> movies) {
+            if (movies != null) {
+                for(Movie movie : movies) {
                     adapter.addItem(movie, mMovies.size());
                 }
             }
         }
 
         @Override
-        protected List<String> doInBackground(String... params) {
+        protected List<Movie> doInBackground(String... params) {
 
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
@@ -169,7 +170,7 @@ public class MoviesFragment extends Fragment {
             return null;
         }
 
-        private List<String> getMoviesDataFromJson(String moviesJsonStr) throws JSONException{
+        private List<Movie> getMoviesDataFromJson(String moviesJsonStr) throws JSONException{
 
             // Declare the names of the JSON objects that need to be extracted
             final String OBJ_LIST = "results";
@@ -178,19 +179,19 @@ public class MoviesFragment extends Fragment {
             JSONObject moviesJson = new JSONObject(moviesJsonStr);
             JSONArray moviesArray = moviesJson.getJSONArray(OBJ_LIST);
 
-            List<String> resultStrs = new ArrayList<>();
+            List<Movie> moviesList = new ArrayList<>();
             for (int i = 0; i < moviesArray.length(); i++) {
-                String title;
+                Movie movie = new Movie();
 
                 // Get the json object representing the data you want
                 JSONObject movieObject = moviesArray.getJSONObject(i);
-                title = movieObject.getString(OBJ_TITLE);
+                movie.setmTitle(movieObject.getString(OBJ_TITLE));
 
-                resultStrs.add("Movie: " + title);
-                Log.d(LOG_TAG, "Movie added: " + title);
+                moviesList.add(movie);
+                Log.d(LOG_TAG, "Movie added: " + movie.getmTitle());
             }
 
-            return resultStrs;
+            return moviesList;
         }
     }
 }
