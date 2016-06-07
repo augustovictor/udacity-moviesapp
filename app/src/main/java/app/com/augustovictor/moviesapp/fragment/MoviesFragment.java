@@ -143,7 +143,6 @@ public class MoviesFragment extends Fragment {
 
 
             } catch (IOException e) {
-                Log.e("FetchMoviesTask", "Error closing stream", e);
                 // If the code did not get successfully the data, there's no point in attempting to parse it
                 moviesJsonStr = null;
             } finally {
@@ -154,7 +153,6 @@ public class MoviesFragment extends Fragment {
                     try {
                         reader.close();
                     } catch (final IOException e) {
-                        Log.e("FetchMoviesTask", "Error closing stream", e);
                     }
                 }
             }
