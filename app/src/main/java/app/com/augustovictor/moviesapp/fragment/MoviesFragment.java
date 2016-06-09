@@ -9,6 +9,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -47,6 +49,12 @@ public class MoviesFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         updateMovies();
@@ -67,6 +75,12 @@ public class MoviesFragment extends Fragment {
         setUpRecyclerView(v, mMovies);
 
         return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main_menu, menu);
     }
 
     public void setUpRecyclerView(View v, List<Movie> movies) {
@@ -180,6 +194,7 @@ public class MoviesFragment extends Fragment {
             // Declare the names of the JSON objects that need to be extracted
             final String
                     OBJ_LIST = "results",
+                    OBJ_ID = "id",
                     OBJ_TITLE = "title",
                     OBJ_OVERVIEW = "overview",
                     OBJ_POSTER_PATH = "poster_path",
@@ -202,22 +217,27 @@ public class MoviesFragment extends Fragment {
                 // Get the json object representing the data you want
                 JSONObject movieObject = moviesArray.getJSONObject(i);
 
+                // Integer
+                movie.setmId(movieObject.getInt(OBJ_ID));
+                movie.setmVotes(movieObject.getInt(OBJ_VOTES));
+
+                // String
                 movie.setmTitle(movieObject.getString(OBJ_TITLE));
                 movie.setmOverview(movieObject.getString(OBJ_OVERVIEW));
                 movie.setmPoster(movieObject.getString(OBJ_POSTER_PATH));
                 movie.setmBackdropPath(movieObject.getString(OBJ_BACKDROP_PATH));
                 movie.setmLanguage(movieObject.getString(OBJ_LANGUAGE));
 
-                movie.setmVotes(movieObject.getInt(OBJ_VOTES));
-
+                // Double
                 movie.setmVotesAvg(movieObject.getDouble(OBJ_VOTES_AVG));
 
+                // Date
                 String releaseDate = movieObject.getString(OBJ_RELEASE_DATE);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
                 Date formatedDate = dateFormat.parse(releaseDate);
-
                 movie.setmReleaseDate(formatedDate);
 
+                // Boolean
                 movie.setmAdult(movieObject.getBoolean(OBJ_ADULT));
                 movie.setmHasVideo(movieObject.getBoolean(OBJ_HAS_VIDEO));
 
