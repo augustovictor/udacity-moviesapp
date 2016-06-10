@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MoviesApp</string>
     <string name="filter_rate_label">Filter by rate</string>
+    <string name="filter_popularity_label">Filter by popularity</string>
 </resources>

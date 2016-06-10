@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,9 +26,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import app.com.augustovictor.moviesapp.BuildConfig;
@@ -78,6 +77,22 @@ public class MoviesFragment extends Fragment {
         inflater.inflate(R.menu.main_menu, menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_filter_popularity:
+                updateMovies(FilterEnum.POPULARITY.toString());
+                return true;
+
+            case R.id.menu_item_filter_rated:
+                updateMovies(FilterEnum.VOTE_AVARAGE.toString());
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public void setUpRecyclerView(View v, List<Movie> movies) {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.movies_list_recycler_view);
 
@@ -97,6 +112,8 @@ public class MoviesFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Movie> movies) {
             if (movies != null) {
+                mMovies.clear();
+                adapter.notifyDataSetChanged();
                 for (Movie movie : movies) {
                     adapter.addItem(movie, mMovies.size());
                 }
@@ -225,10 +242,10 @@ public class MoviesFragment extends Fragment {
                 movie.setmVotesAvg(movieObject.getDouble(OBJ_VOTES_AVG));
 
                 // Date
-                String releaseDate = movieObject.getString(OBJ_RELEASE_DATE);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
-                Date formatedDate = dateFormat.parse(releaseDate);
-                movie.setmReleaseDate(formatedDate);
+//                String releaseDate = movieObject.getString(OBJ_RELEASE_DATE);
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
+//                Date formatedDate = dateFormat.parse(releaseDate);
+//                movie.setmReleaseDate(formatedDate);
 
                 // Boolean
                 movie.setmAdult(movieObject.getBoolean(OBJ_ADULT));
