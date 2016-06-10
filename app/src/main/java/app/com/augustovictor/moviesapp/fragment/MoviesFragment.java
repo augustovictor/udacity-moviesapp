@@ -34,6 +34,7 @@ import app.com.augustovictor.moviesapp.BuildConfig;
 import app.com.augustovictor.moviesapp.R;
 import app.com.augustovictor.moviesapp.adapter.MoviesListAdapter;
 import app.com.augustovictor.moviesapp.model.Movie;
+import app.com.augustovictor.moviesapp.util.FilterEnum;
 
 /**
  * Created by victoraweb on 6/6/16.
@@ -54,15 +55,9 @@ public class MoviesFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        updateMovies();
-    }
-
-    public void updateMovies() {
+    public void updateMovies(String filter) {
         FetchMoviesTask moviesTask = new FetchMoviesTask();
-        moviesTask.execute("popularity.desc");
+        moviesTask.execute(filter);
     }
 
     @Nullable
@@ -70,7 +65,7 @@ public class MoviesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.movies_list, container, false);
 
-        updateMovies();
+        updateMovies(FilterEnum.POPULARITY.toString());
 
         setUpRecyclerView(v, mMovies);
 
@@ -96,8 +91,6 @@ public class MoviesFragment extends Fragment {
     // ASYNCTASK
 
     public class FetchMoviesTask extends AsyncTask<String, Void, List<Movie>> {
-
-        private List<String> mMoviesString;
 
         private final String LOG_TAG = FetchMoviesTask.class.getSimpleName();
 
