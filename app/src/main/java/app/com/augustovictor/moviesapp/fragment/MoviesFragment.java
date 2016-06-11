@@ -40,12 +40,21 @@ import app.com.augustovictor.moviesapp.util.FilterEnum;
  */
 public class MoviesFragment extends Fragment {
 
+    private static final String ARG_MOVIE = "movie";
     private RecyclerView mRecyclerView;
     private MoviesListAdapter adapter;
     private List<Movie> mMovies;
 
     public MoviesFragment() {
         this.mMovies = new ArrayList<>();
+    }
+
+    public static MoviesFragment newInstance(Movie movie) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_MOVIE, movie);
+        MoviesFragment fragment = new MoviesFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override

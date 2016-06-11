@@ -1,11 +1,14 @@
 package app.com.augustovictor.moviesapp.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by victoraweb on 6/7/16.
  */
-public class Movie {
+public class Movie implements Serializable{
+
+    private int mId;
 
     private String
             mTitle,
@@ -23,6 +26,14 @@ public class Movie {
     private boolean
             mAdult,
             mHasVideo;
+
+    public int getmId() {
+        return mId;
+    }
+
+    public void setmId(int id) {
+        this.mId= id;
+    }
 
     public String getmTitle() {
         return mTitle;
@@ -45,7 +56,7 @@ public class Movie {
     }
 
     public void setmPoster(String mPoster) {
-        this.mPoster = mPoster;
+        this.mPoster = "http://image.tmdb.org/t/p/w300" + mPoster;
     }
 
     public String getmBackdropPath() {
