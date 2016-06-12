@@ -26,7 +26,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import app.com.augustovictor.moviesapp.BuildConfig;
@@ -251,10 +253,10 @@ public class MoviesFragment extends Fragment {
                 movie.setmVotesAvg(movieObject.getDouble(OBJ_VOTES_AVG));
 
                 // Date
-//                String releaseDate = movieObject.getString(OBJ_RELEASE_DATE);
-//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
-//                Date formatedDate = dateFormat.parse(releaseDate);
-//                movie.setmReleaseDate(formatedDate);
+                String releaseDate = movieObject.getString(OBJ_RELEASE_DATE);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
+                Date formatedDate = dateFormat.parse(releaseDate);
+                movie.setmReleaseDate(formatedDate);
 
                 // Boolean
                 movie.setmAdult(movieObject.getBoolean(OBJ_ADULT));

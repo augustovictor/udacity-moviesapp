@@ -71,7 +71,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
             mMovieTitle = (TextView) itemView.findViewById(R.id.list_item_title_textview);
             mMovieVoteAverage = (TextView) itemView.findViewById(R.id.list_item_vote_average_textview);
             mMovieLanguage = (TextView) itemView.findViewById(R.id.list_item_language_textview);
-//            mMovieReleaseDate = (TextView) itemView.findViewById(R.id.list_item_release_date_textview);
+            mMovieReleaseDate = (TextView) itemView.findViewById(R.id.list_item_release_date_textview);
             mMoviePoster = (ImageView) itemView.findViewById(R.id.list_item_poster_imageview);
 
             this.context = context;
@@ -85,7 +85,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
             this.mMovieTitle.setText(currentMovie.getmTitle());
             this.mMovieVoteAverage.setText("Rating: " + String.valueOf(currentMovie.getmVotesAvg()));
             this.mMovieLanguage.setText(currentMovie.getmLanguage());
-//            this.mMovieReleaseDate.setText(currentMovie.getmReleaseDate().toString());
+            this.mMovieReleaseDate.setText(currentMovie.getmReleaseDate().toString());
             Picasso.with(context).load(currentMovie.getmPoster()).fit().placeholder(R.drawable.ic_loading_image).into(mMoviePoster);
             Log.d(LOG_TAG, "Movie path: " + currentMovie.getmPoster());
         }

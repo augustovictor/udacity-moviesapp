@@ -56,11 +56,11 @@
         android:layout_height="wrap_content"
         android:text="Language"/>
 
-        <!--<TextView-->
-        <!--android:id="@+id/list_item_release_date_textview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Release date"/>-->
+        <TextView
+        android:id="@+id/list_item_release_date_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Release date"/>
     </LinearLayout>
 
 

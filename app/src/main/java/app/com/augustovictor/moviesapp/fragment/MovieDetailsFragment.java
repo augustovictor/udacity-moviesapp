@@ -25,6 +25,7 @@ public class MovieDetailsFragment extends Fragment {
     private TextView mMovieVoteAvg;
     private TextView mMovieLanguageTextView;
     private TextView mMovieOverviewTextView;
+    private TextView mMovieReleaseDateTextView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,11 +51,13 @@ public class MovieDetailsFragment extends Fragment {
         mMovieVoteAvg = (TextView) v.findViewById(R.id.movie_details_vote_avarage);
         mMovieLanguageTextView = (TextView) v.findViewById(R.id.movie_details_vote_language);
         mMovieOverviewTextView = (TextView) v.findViewById(R.id.movie_details_overview);
+        mMovieReleaseDateTextView = (TextView) v.findViewById(R.id.movie_details_release_date);
 
         mMovieTitleTextView.setText(mMovie.getmTitle());
         mMovieVoteAvg.setText(String.valueOf(mMovie.getmVotesAvg()));
         mMovieLanguageTextView.setText(mMovie.getmLanguage());
         mMovieOverviewTextView.setText(mMovie.getmOverview());
+        mMovieReleaseDateTextView.setText(mMovie.getmReleaseDate().toString());
 
         return v;
     }
