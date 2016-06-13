@@ -1,7 +1,6 @@
 package app.com.augustovictor.moviesapp.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by victoraweb on 6/7/16.
@@ -15,13 +14,14 @@ public class Movie implements Serializable{
             mOverview,
             mPoster,
             mBackdropPath,
-            mLanguage;
+            mLanguage,
+            mReleaseDate;
 
     private int mVotes;
 
     private double mVotesAvg;
 
-    private Date mReleaseDate;
+//    private Date mReleaseDate;
 
     private boolean
             mAdult,
@@ -64,7 +64,7 @@ public class Movie implements Serializable{
     }
 
     public void setmBackdropPath(String mBackdropPath) {
-        this.mBackdropPath = mBackdropPath;
+        this.mBackdropPath = "http://image.tmdb.org/t/p/w600" + mBackdropPath;
     }
 
     public String getmLanguage() {
@@ -91,12 +91,16 @@ public class Movie implements Serializable{
         this.mVotesAvg = mVotesAvg;
     }
 
-    public Date getmReleaseDate() {
+    public String getmReleaseDate() {
         return mReleaseDate;
     }
 
-    public void setmReleaseDate(Date mReleaseDate) {
-        this.mReleaseDate = mReleaseDate;
+    public void setmReleaseDate(String mReleaseDate) {
+        if (mReleaseDate.equals("")) {
+            this.mReleaseDate = "Release date not available";
+        } else {
+            this.mReleaseDate = mReleaseDate;
+        }
     }
 
     public boolean ismAdult() {
@@ -113,5 +117,9 @@ public class Movie implements Serializable{
 
     public void setmHasVideo(boolean mHasVideo) {
         this.mHasVideo = mHasVideo;
+    }
+
+    private String formatImageUrl(String urlPath) {
+        return "http://image.tmdb.org/t/p/w300/" + urlPath;
     }
 }

@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,9 +27,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import app.com.augustovictor.moviesapp.BuildConfig;
@@ -62,7 +61,23 @@ public class MoviesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // TODO: 6/12/16 Get layout manager to pass it to EndLess constructor as args
+//        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener() {
+//            @Override
+//            public void onLoadMore(int page, int totalItemsCount) {
+//                loadMoremovies(adapter, mRecyclerView);
+//            }
+//        });
         setHasOptionsMenu(true);
+    }
+
+    private void loadMoremovies(MoviesListAdapter adapter, RecyclerView mRecyclerView) {
+//        int currentSize = adapter.getItemCount();
+//        FetchMoviesTask moviesTask = new FetchMoviesTask();
+        // TODO: 6/11/16 Execute new fetch with current filter param and page number
+//        moviesTask.execute();
+//        ArrayList<Movie> newMovies =
+        Toast.makeText(getActivity(), "Bottom reached", Toast.LENGTH_SHORT).show();
     }
 
     public void updateMovies(String filter) {
@@ -115,7 +130,6 @@ public class MoviesFragment extends Fragment {
     }
 
     // ASYNCTASK
-
     public class FetchMoviesTask extends AsyncTask<String, Void, List<Movie>> {
 
         private final String LOG_TAG = FetchMoviesTask.class.getSimpleName();
@@ -254,9 +268,9 @@ public class MoviesFragment extends Fragment {
 
                 // Date
                 String releaseDate = movieObject.getString(OBJ_RELEASE_DATE);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
-                Date formatedDate = dateFormat.parse(releaseDate);
-                movie.setmReleaseDate(formatedDate);
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
+//                Date formatedDate = dateFormat.parse(releaseDate);
+                movie.setmReleaseDate(releaseDate);
 
                 // Boolean
                 movie.setmAdult(movieObject.getBoolean(OBJ_ADULT));
